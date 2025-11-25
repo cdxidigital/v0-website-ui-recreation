@@ -84,7 +84,7 @@ export function Hero() {
   }
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-[44px]">
       <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
         <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-1e62dbf4-a8ee-42a2-a068-3c8e05f6ccad-JhLr8XyoQGeYGwH1mYADsX3qapfPSs.mp4" type="video/mp4" />
       </video>

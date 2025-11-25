@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Twitter, Instagram, Linkedin, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/theme-context"
@@ -64,9 +65,13 @@ export function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
             <div className="col-span-2 md:col-span-1">
               <Link href="/" className="flex items-center gap-2 mb-4">
-                <span className="text-xl font-bold italic text-white" style={{ fontFamily: "cursive" }}>
-                  whoredash
-                </span>
+                <Image
+                  src="/images/logo.png"
+                  alt="WhoreDash"
+                  width={150}
+                  height={40}
+                  className="h-8 w-auto object-contain"
+                />
               </Link>
               <p className="text-xs leading-relaxed max-w-xs">Premium companion booking platform</p>
             </div>

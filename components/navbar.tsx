@@ -34,7 +34,7 @@ export function Navbar() {
       </div>
 
       {/* Main Navbar */}
-      <header className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 border-b border-purple-800/30 sticky top-0 z-50">
+      <header className="absolute top-[28px] left-0 right-0 z-50 bg-gradient-to-b from-slate-900/95 via-slate-900/70 to-transparent">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
@@ -43,7 +43,7 @@ export function Navbar() {
               alt="whoredash"
               width={140}
               height={40}
-              className="h-10 w-auto object-contain"
+              className="w-auto object-contain h-16"
               priority
             />
           </Link>

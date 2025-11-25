@@ -122,31 +122,79 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Added smooth scroll behavior for better UX */
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
-/* Theme Definitions */
-:root.theme-all {
-  --primary: 330 81% 60%; /* Pink-600 equivalent */
-  --primary-foreground: 0 0% 100%;
-  --accent: 270 50% 60%; /* Purple mix */
+/* Added custom animations for polish */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
-:root.theme-female {
-  --primary: 330 81% 60%; /* Pink-500 */
-  --primary-foreground: 0 0% 100%;
-  --accent: 340 82% 52%;
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
 }
 
-:root.theme-male {
-  --primary: 221 83% 53%; /* Blue-600 */
-  --primary-foreground: 0 0% 100%;
-  --accent: 217 91% 60%;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-:root.theme-trans {
-  --primary: 270 50% 60%; /* Purple-500 */
-  --primary-foreground: 0 0% 100%;
-  --accent: 30 80% 60%; /* Orange-ish */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
 
-/* Removed 3D button utility classes for cleaner navigation */
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+  background-size: 1000px 100%;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Improved focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Better scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
