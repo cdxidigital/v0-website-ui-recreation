@@ -96,7 +96,7 @@ export function Hero() {
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-[44px]">
       {/* Video Background */}
       <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
-        <source src="\public\images\grok-whoredash.mp4" type="video/mp4" />
+        <source src="\images\grok-whoredash.mp4" type="video/mp4" />
       </video>
 
       {/* Gradient Overlay */}
