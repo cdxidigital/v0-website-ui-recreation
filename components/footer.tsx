@@ -89,7 +89,7 @@ export function Footer() {
                   alt="WhoreDash"
                   width={150}
                   height={40}
-                  className="h-8 w-auto object-contain"
+                  className="w-auto object-contain h-14"
                 />
               </Link>
               <p className="text-xs leading-relaxed max-w-xs">
