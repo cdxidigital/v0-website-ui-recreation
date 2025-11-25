@@ -43,7 +43,8 @@ export function Navbar() {
               alt="whoredash"
               width={140}
               height={40}
-              className="w-auto object-contain h-[60px]px]2px]px]           priority
+              className="h-10 w-auto object-contain"
+              priority
             />
           </Link>
 
