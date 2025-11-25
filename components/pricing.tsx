@@ -1,105 +1,176 @@
-import { Check, DollarSign } from "lucide-react"
+"use client"
+
+import { DollarSign, TrendingUp, Users, CheckCircle, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useTheme } from "@/components/theme-context"
 
 export function Pricing() {
+  const { theme } = useTheme()
+
+  const getAccentColor = () => {
+    switch (theme) {
+      case "female":
+        return "text-pink-400"
+      case "male":
+        return "text-blue-400"
+      case "trans":
+        return "text-sky-400"
+      case "nonbinary":
+        return "text-yellow-400"
+      default:
+        return "text-pink-400"
+    }
+  }
+
+  const getButtonClass = () => {
+    switch (theme) {
+      case "female":
+        return "bg-pink-500 hover:bg-pink-600"
+      case "male":
+        return "bg-blue-500 hover:bg-blue-600"
+      case "trans":
+        return "bg-gradient-to-r from-sky-400 to-pink-400 hover:from-sky-500 hover:to-pink-500"
+      case "nonbinary":
+        return "bg-gradient-to-r from-yellow-400 to-purple-500 hover:from-yellow-500 hover:to-purple-600"
+      default:
+        return "bg-pink-500 hover:bg-pink-600"
+    }
+  }
+
+  const getIconBgClass = (type: string) => {
+    switch (theme) {
+      case "female":
+        return type === "dollar" ? "bg-pink-100" : type === "calendar" ? "bg-purple-100" : "bg-green-100"
+      case "male":
+        return type === "dollar" ? "bg-blue-100" : type === "calendar" ? "bg-cyan-100" : "bg-green-100"
+      case "trans":
+        return type === "dollar" ? "bg-sky-100" : type === "calendar" ? "bg-pink-100" : "bg-green-100"
+      case "nonbinary":
+        return type === "dollar" ? "bg-yellow-100" : type === "calendar" ? "bg-purple-100" : "bg-green-100"
+      default:
+        return type === "dollar" ? "bg-pink-100" : type === "calendar" ? "bg-purple-100" : "bg-green-100"
+    }
+  }
+
+  const getIconTextClass = (type: string) => {
+    switch (theme) {
+      case "female":
+        return type === "dollar" ? "text-pink-600" : type === "calendar" ? "text-purple-600" : "text-green-600"
+      case "male":
+        return type === "dollar" ? "text-blue-600" : type === "calendar" ? "text-cyan-600" : "text-green-600"
+      case "trans":
+        return type === "dollar" ? "text-sky-500" : type === "calendar" ? "text-pink-500" : "text-green-600"
+      case "nonbinary":
+        return type === "dollar" ? "text-yellow-600" : type === "calendar" ? "text-purple-600" : "text-green-600"
+      default:
+        return type === "dollar" ? "text-pink-600" : type === "calendar" ? "text-purple-600" : "text-green-600"
+    }
+  }
+
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Transparent Pricing for</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Transparent Pricing for Beautiful Companions</h2>
           <p className="text-gray-500">No hidden fees, no surprises - just clear, upfront pricing</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Client Pricing */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-            <div className="flex items-center gap-2 text-pink-500 font-bold mb-6">
-              <DollarSign className="w-5 h-5" />
-              Transparent Pricing
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="border border-pink-100 rounded-xl p-4 text-center bg-pink-50/30">
-                <div className="text-pink-600 font-bold text-xl mb-1">$200-800</div>
-                <div className="text-xs text-gray-500">Per Hour Range</div>
-              </div>
-              <div className="border border-gray-100 rounded-xl p-4 text-center">
-                <div className="text-gray-900 font-bold text-xl mb-1">$350</div>
-                <div className="text-xs text-gray-500">Average Rate</div>
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="space-y-6">
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="flex items-center gap-3 mb-6">
+                <div
+                  className={`w-12 h-12 ${getIconBgClass("dollar")} rounded-full flex items-center justify-center transition-colors duration-300`}
+                >
+                  <DollarSign className={`w-6 h-6 ${getIconTextClass("dollar")} transition-colors duration-300`} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">Transparent Pricing</h3>
+                  <p className="text-sm text-gray-500">No hidden fees - just clear, upfront pricing</p>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">Booking Fee</span>
-                <span className="bg-pink-100 text-pink-700 px-2 py-0.5 rounded text-xs font-medium">$25</span>
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="flex items-center gap-3 mb-6">
+                <div
+                  className={`w-12 h-12 ${getIconBgClass("calendar")} rounded-full flex items-center justify-center transition-colors duration-300`}
+                >
+                  <Calendar className={`w-6 h-6 ${getIconTextClass("calendar")} transition-colors duration-300`} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">Flexible Bookings</h3>
+                  <p className="text-sm text-gray-500">Book by the hour, day, or custom arrangements</p>
+                </div>
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">Platform Service Fee</span>
-                <span className="bg-pink-100 text-pink-700 px-2 py-0.5 rounded text-xs font-medium">15%</span>
-              </div>
-              <div className="flex justify-between items-center text-sm mb-6">
-                <span className="text-gray-600">Payment Processing</span>
-                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-medium">Free</span>
-              </div>
+            </div>
 
-              <div className="space-y-3 pt-6 border-t border-gray-100">
-                {["Secure payment processing", "Free cancellation up to 30 min before", "100% verified companions"].map(
-                  (item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                      <Check className="w-4 h-4 text-green-500" />
-                      {item}
-                    </div>
-                  ),
-                )}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="flex items-center gap-3 mb-6">
+                <div className={`w-12 h-12 ${getIconBgClass("check")} rounded-full flex items-center justify-center`}>
+                  <CheckCircle className={`w-6 h-6 ${getIconTextClass("check")}`} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">Secure Payments</h3>
+                  <p className="text-sm text-gray-500">All transactions processed securely and discreetly</p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Companion Earnings */}
-          <div className="bg-pink-50 rounded-2xl p-8 border border-pink-100 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
+
             <div className="relative z-10">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Start Earning as a Premium Companion</h3>
-              <p className="text-sm text-gray-500 mb-8">Join 10,000+ verified companions earning top rates</p>
+              <h3 className="text-2xl font-bold mb-8">Companion Benefits</h3>
 
-              <div className="grid grid-cols-3 gap-2 mb-8">
-                <div className="text-center">
-                  <div className="text-pink-600 font-bold text-lg">$3,500</div>
-                  <div className="text-[10px] text-gray-500 leading-tight">Average Monthly</div>
-                </div>
-                <div className="text-center border-l border-pink-200">
-                  <div className="text-pink-600 font-bold text-lg">$12,000</div>
-                  <div className="text-[10px] text-gray-500 leading-tight">Top Earners</div>
-                </div>
-                <div className="text-center border-l border-pink-200">
-                  <div className="text-pink-600 font-bold text-lg">85%</div>
-                  <div className="text-[10px] text-gray-500 leading-tight">Booking Rate</div>
-                </div>
-              </div>
-
-              <div className="mb-2 text-sm font-bold text-gray-900">What You Get:</div>
-              <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-8">
-                {[
-                  "Instant bookings & payments",
-                  "24/7 safety support & monitoring",
-                  "Professional photo shoots",
-                  "Marketing & promotion tools",
-                  "Weekly payouts via direct deposit",
-                  "Flexible scheduling & location control",
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-1.5 text-xs text-gray-600">
-                    <div className="w-1 h-1 rounded-full bg-pink-500 mt-1.5 shrink-0" />
-                    {item}
+              <div className="space-y-6 mb-10">
+                <div className="flex items-start gap-3">
+                  <TrendingUp
+                    className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`}
+                  />
+                  <div>
+                    <div className="font-semibold mb-1">Average Earnings</div>
+                    <div className={`text-3xl font-bold ${getAccentColor()} transition-colors duration-300`}>
+                      $5,000/mo
+                    </div>
                   </div>
-                ))}
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Users className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`} />
+                  <div>
+                    <div className="font-semibold mb-1">50,000+ Active Clients</div>
+                    <div className="text-sm text-gray-300">Large client base to reach</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Calendar className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`} />
+                  <div>
+                    <div className="font-semibold mb-1">Flexible Scheduling</div>
+                    <div className="text-sm text-gray-300">Set your own availability and rates</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <CheckCircle
+                    className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`}
+                  />
+                  <div>
+                    <div className="font-semibold mb-1">Verified Performers</div>
+                    <div className="text-sm text-gray-300">Background checks & safety protocols</div>
+                  </div>
+                </div>
               </div>
 
-              <Button className="w-full bg-pink-600 hover:bg-pink-700 text-white rounded-lg py-6 font-bold shadow-lg shadow-pink-200">
-                Start Your Application
+              <Button
+                className={`w-full ${getButtonClass()} text-white rounded-xl py-6 text-lg font-bold shadow-xl transition-all duration-300`}
+              >
+                Apply to Join
               </Button>
-              <div className="text-[10px] text-center text-gray-400 mt-3">
-                Quick approval process • Background check included • Start earning in 48 hours
-              </div>
             </div>
           </div>
         </div>

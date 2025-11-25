@@ -1,157 +1,209 @@
 "use client"
 
-import { Star, MapPin, Filter } from "lucide-react"
+import { Star, MapPin, Heart, CheckCircle, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/theme-context"
-import { useState } from "react"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  SheetFooter,
-  SheetClose,
-} from "@/components/ui/sheet"
-import { Slider } from "@/components/ui/slider"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+
+const companions = [
+  {
+    name: "Sophia",
+    location: "New York",
+    rating: 4.9,
+    bookings: 150,
+    responseRate: 98,
+    price: 350,
+    tags: ["Bedroom Fun", "Intimate Dining"],
+    image: "/beautiful-young-woman-professional-headshot-elegan.jpg",
+    available: true,
+    verified: true,
+    responseTime: "30-45 min",
+  },
+  {
+    name: "Isabella",
+    location: "Los Angeles",
+    rating: 5.0,
+    bookings: 89,
+    responseRate: 100,
+    price: 420,
+    tags: ["Social Companion", "Cultural Events"],
+    image: "/elegant-latina-woman-professional-photo-studio.jpg",
+    available: false,
+    verified: true,
+    responseTime: "30-45 min",
+  },
+  {
+    name: "Victoria",
+    location: "Miami",
+    rating: 4.8,
+    bookings: 76,
+    responseRate: 95,
+    price: 380,
+    tags: ["Fine Dining", "Travel"],
+    image: "/beautiful-brunette-woman-professional-portrait-sof.jpg",
+    available: true,
+    verified: true,
+    responseTime: "30-45 min",
+  },
+]
 
 export function Trending() {
   const { theme } = useTheme()
-  const [filters, setFilters] = useState({
-    ageRange: [18, 35],
-    verified: true,
-    availableNow: true,
-  })
 
-  const getHoverColor = () => {
+  const getAccentColor = () => {
     switch (theme) {
+      case "female":
+        return "text-pink-600"
       case "male":
-        return "hover:text-blue-600"
+        return "text-blue-600"
       case "trans":
-        return "hover:text-purple-600"
+        return "text-sky-500"
+      case "nonbinary":
+        return "text-yellow-600"
       default:
-        return "hover:text-pink-600"
+        return "text-pink-600"
+    }
+  }
+
+  const getButtonClass = () => {
+    switch (theme) {
+      case "female":
+        return "border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white"
+      case "male":
+        return "border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+      case "trans":
+        return "border-sky-400 text-sky-500 hover:bg-sky-400 hover:text-white"
+      case "nonbinary":
+        return "border-yellow-500 text-yellow-600 hover:bg-yellow-500 hover:text-white"
+      default:
+        return "border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
+    }
+  }
+
+  const getHeartHoverClass = () => {
+    switch (theme) {
+      case "female":
+        return "hover:text-pink-500"
+      case "male":
+        return "hover:text-blue-500"
+      case "trans":
+        return "hover:text-sky-400"
+      case "nonbinary":
+        return "hover:text-yellow-500"
+      default:
+        return "hover:text-pink-500"
     }
   }
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-1">Trending Companions Near You</h2>
-            <div className="flex items-center gap-2 text-sm text-orange-500 font-medium">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-              </span>
-              Most booked this week • Available now
-            </div>
+            <p className="text-sm text-gray-500">Most booked this week - Available now</p>
           </div>
-
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" className="gap-2 rounded-full bg-transparent">
-                  <Filter className="w-4 h-4" />
-                  Filters
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Filter Companions</SheetTitle>
-                  <SheetDescription>Refine your search to find the perfect match.</SheetDescription>
-                </SheetHeader>
-                <div className="py-6 space-y-6">
-                  {/* Age Range */}
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-sm">
-                      Age Range: {filters.ageRange[0]} - {filters.ageRange[1]}
-                    </h4>
-                    <Slider
-                      defaultValue={[18, 35]}
-                      max={60}
-                      min={18}
-                      step={1}
-                      onValueChange={(val) => setFilters({ ...filters, ageRange: val })}
-                    />
-                  </div>
-
-                  {/* Toggles */}
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="verified" className="flex items-center gap-2">
-                        <ShieldCheckIcon className="w-4 h-4 text-green-500" />
-                        Verified Only
-                      </Label>
-                      <Checkbox id="verified" defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="available">Available Now</Label>
-                      <Checkbox id="available" defaultChecked />
-                    </div>
-                  </div>
-
-                  {/* Services (Mock) */}
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-sm">Services</h4>
-                    <div className="grid grid-cols-2 gap-2">
-                      {["Dinner Date", "Travel", "Events", "Gaming"].map((s) => (
-                        <div key={s} className="flex items-center space-x-2">
-                          <Checkbox id={s} />
-                          <Label htmlFor={s} className="text-sm font-normal">
-                            {s}
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <SheetFooter>
-                  <SheetClose asChild>
-                    <Button type="submit" className="w-full rounded-full bg-black text-white">
-                      Apply Filters
-                    </Button>
-                  </SheetClose>
-                </SheetFooter>
-              </SheetContent>
-            </Sheet>
-
-            <a
-              href="#"
-              className={`text-sm font-bold text-gray-900 ${getHoverColor()} transition-colors whitespace-nowrap ml-auto`}
-            >
-              View All 2,500+ →
-            </a>
-          </div>
+          <Button
+            variant="outline"
+            className={`rounded-full px-6 bg-transparent transition-all duration-300 ${getButtonClass()}`}
+          >
+            View All 2,500+ →
+          </Button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="group relative rounded-xl overflow-hidden bg-gray-100 aspect-[3/4] cursor-pointer">
-              <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-              {/* Placeholder Image Effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 group-hover:to-black/80 transition-all" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {companions.map((companion, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow"
+            >
+              {/* Image Container */}
+              <div className="relative aspect-[4/5]">
+                <img
+                  src={companion.image || "/placeholder.svg"}
+                  alt={companion.name}
+                  className="w-full h-full object-cover"
+                />
 
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                <div className="flex justify-between items-start mb-1">
-                  <div className="font-bold text-lg">Sarah, 24</div>
-                  <div className="flex items-center gap-1 text-xs bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full">
-                    <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                    4.9
+                {/* Status Badge */}
+                <div className="absolute top-3 left-3">
+                  <span
+                    className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                      companion.available ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
+                    }`}
+                  >
+                    {companion.available ? "Available" : "Busy"}
+                  </span>
+                </div>
+
+                {/* Response Time */}
+                <div className="absolute top-3 left-24">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/90 text-gray-700 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {companion.responseTime}
+                  </span>
+                </div>
+
+                {/* Verified Badge */}
+                {companion.verified && (
+                  <div className="absolute top-3 right-3">
+                    <span className="bg-green-500 text-white text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />
+                      Verified
+                    </span>
+                  </div>
+                )}
+
+                {/* Heart - Dynamic hover color */}
+                <button className="absolute bottom-3 right-3 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-sm">
+                  <Heart className={`w-5 h-5 text-gray-400 ${getHeartHoverClass()} transition-colors`} />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <h3 className="font-bold text-gray-900 text-lg">{companion.name}</h3>
+                    <div className="flex items-center gap-1 text-sm text-gray-500">
+                      <MapPin className="w-3.5 h-3.5" />
+                      {companion.location}
+                    </div>
+                  </div>
+                  <div className={`text-xl font-bold transition-colors duration-300 ${getAccentColor()}`}>
+                    ${companion.price}
+                    <span className="text-sm font-normal text-gray-500">/hr</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 text-xs text-gray-300 mb-3">
-                  <MapPin className="w-3 h-3" />
-                  2.5 miles away
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {companion.tags.map((tag, j) => (
+                    <span key={j} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
 
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity text-xs flex flex-wrap gap-1">
-                  <span className="bg-white/20 px-2 py-0.5 rounded-full">Travel</span>
-                  <span className="bg-white/20 px-2 py-0.5 rounded-full">Dinner</span>
+                {/* Stats Row */}
+                <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                  <div className="flex items-center gap-1">
+                    <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium text-gray-900">{companion.rating}</span>
+                    <span>• {companion.bookings} bookings</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-green-600 font-medium">{companion.responseRate}% response</span>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2">
+                  <Button variant="outline" className="flex-1 rounded-lg text-sm bg-transparent">
+                    View Profile
+                  </Button>
+                  <Button variant="outline" className="w-10 h-10 p-0 rounded-lg bg-transparent">
+                    +
+                  </Button>
                 </div>
               </div>
             </div>
@@ -159,23 +211,5 @@ export function Trending() {
         </div>
       </div>
     </section>
-  )
-}
-
-function ShieldCheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
   )
 }

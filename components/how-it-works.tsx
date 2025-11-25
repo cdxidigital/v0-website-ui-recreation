@@ -1,6 +1,28 @@
+"use client"
+
 import { Search, Clock, UserCheck, Lock, Star, Shield, Headphones } from "lucide-react"
+import { useTheme } from "@/components/theme-context"
 
 export function HowItWorks() {
+  const { theme } = useTheme()
+
+  const getStepColors = () => {
+    switch (theme) {
+      case "female":
+        return ["bg-pink-500", "bg-purple-500", "bg-pink-500"]
+      case "male":
+        return ["bg-blue-500", "bg-cyan-500", "bg-blue-500"]
+      case "trans":
+        return ["bg-sky-400", "bg-pink-400", "bg-sky-400"]
+      case "nonbinary":
+        return ["bg-yellow-500", "bg-purple-500", "bg-yellow-500"]
+      default:
+        return ["bg-pink-500", "bg-purple-500", "bg-pink-500"]
+    }
+  }
+
+  const stepColors = getStepColors()
+
   return (
     <section className="py-20 bg-gray-50/50">
       <div className="container mx-auto px-4 text-center">
@@ -15,24 +37,21 @@ export function HowItWorks() {
               step: "1. Browse & Select",
               desc: "Browse verified hotties in your area and select your perfect match",
               icon: Search,
-              color: "bg-pink-500",
             },
             {
               step: "2. Book Instantly",
               desc: "Choose your time and location, then book with just a few taps",
               icon: Clock,
-              color: "bg-purple-500",
             },
             {
               step: "3. Enjoy",
               desc: "Meet your companion and enjoy an unforgettable experience",
               icon: UserCheck,
-              color: "bg-pink-500",
             },
           ].map((item, i) => (
             <div key={i} className="flex flex-col items-center">
               <div
-                className={`w-24 h-24 rounded-full ${item.color} flex items-center justify-center text-white shadow-lg mb-6`}
+                className={`w-24 h-24 rounded-full ${stepColors[i]} flex items-center justify-center text-white shadow-lg mb-6 transition-colors duration-300`}
               >
                 <item.icon className="w-10 h-10" />
               </div>

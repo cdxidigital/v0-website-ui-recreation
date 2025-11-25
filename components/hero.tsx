@@ -2,168 +2,203 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { MapPin, Search, ShieldCheck, Star, Users, Zap, Heart } from "lucide-react"
+import { MapPin, Search } from "lucide-react"
 import { useTheme } from "@/components/theme-context"
 
 export function Hero() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme, themeColors } = useTheme()
 
-  const getGradient = () => {
+  const getActiveButtonClass = () => {
     switch (theme) {
+      case "female":
+        return "bg-pink-500 text-white"
       case "male":
-        return "from-blue-50/50"
+        return "bg-blue-500 text-white"
       case "trans":
-        return "from-purple-50/50"
+        return "bg-gradient-to-r from-sky-400 via-pink-300 to-sky-400 text-slate-800"
+      case "nonbinary":
+        return "bg-gradient-to-r from-yellow-400 via-white to-purple-500 text-slate-800"
       default:
-        return "from-pink-50/50"
+        return "bg-pink-500 text-white"
     }
   }
 
-  const getPrimaryColor = () => {
+  const getSearchButtonClass = () => {
     switch (theme) {
+      case "female":
+        return "bg-pink-500 hover:bg-pink-600"
       case "male":
-        return "text-blue-600"
+        return "bg-blue-500 hover:bg-blue-600"
       case "trans":
-        return "text-purple-600"
-      default:
-        return "text-pink-600"
-    }
-  }
-
-  const getButtonColor = () => {
-    switch (theme) {
-      case "male":
-        return "bg-blue-600 hover:bg-blue-700"
-      case "trans":
-        return "bg-purple-600 hover:bg-purple-700"
+        return "bg-gradient-to-r from-sky-400 to-pink-400 hover:from-sky-500 hover:to-pink-500"
+      case "nonbinary":
+        return "bg-gradient-to-r from-yellow-400 to-purple-500 hover:from-yellow-500 hover:to-purple-600"
       default:
         return "bg-pink-500 hover:bg-pink-600"
     }
   }
 
+  const getGradientTextClass = () => {
+    switch (theme) {
+      case "female":
+        return "from-pink-400 via-rose-400 to-pink-400"
+      case "male":
+        return "from-blue-400 via-cyan-400 to-blue-400"
+      case "trans":
+        return "from-sky-400 via-pink-300 to-sky-400"
+      case "nonbinary":
+        return "from-yellow-400 via-white to-purple-400"
+      default:
+        return "from-pink-400 via-purple-400 to-pink-400"
+    }
+  }
+
+  const getBadgeClass = () => {
+    switch (theme) {
+      case "female":
+        return "bg-pink-500/20 border-pink-400/30 text-pink-300"
+      case "male":
+        return "bg-blue-500/20 border-blue-400/30 text-blue-300"
+      case "trans":
+        return "bg-sky-400/20 border-sky-400/30 text-sky-300"
+      case "nonbinary":
+        return "bg-yellow-500/20 border-yellow-400/30 text-yellow-300"
+      default:
+        return "bg-purple-500/20 border-purple-400/30 text-purple-300"
+    }
+  }
+
+  const getLinkClass = () => {
+    switch (theme) {
+      case "female":
+        return "text-pink-400 hover:text-pink-300"
+      case "male":
+        return "text-blue-400 hover:text-blue-300"
+      case "trans":
+        return "text-sky-400 hover:text-sky-300"
+      case "nonbinary":
+        return "text-yellow-400 hover:text-yellow-300"
+      default:
+        return "text-pink-400 hover:text-pink-300"
+    }
+  }
+
   return (
-    <section className={`pt-12 pb-16 bg-gradient-to-b ${getGradient()} to-white transition-colors duration-500`}>
-      <div className="container mx-auto px-4 text-center max-w-5xl">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
-          Premium Companions
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
+        <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-1e62dbf4-a8ee-42a2-a068-3c8e05f6ccad-JhLr8XyoQGeYGwH1mYADsX3qapfPSs.mp4" type="video/mp4" />
+      </video>
+
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-purple-900/50 to-slate-900/80" />
+
+      <div className="relative z-10 container mx-auto px-4 text-center py-20">
+        <div
+          className={`inline-flex items-center gap-2 border rounded-full px-4 py-2 mb-6 transition-colors duration-300 ${getBadgeClass()}`}
+        >
+          <span className="text-sm">✨ Verified Professionals</span>
+        </div>
+
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
+          Connect With
           <br />
-          Delivered
+          <span
+            className={`bg-gradient-to-r ${getGradientTextClass()} bg-clip-text text-transparent transition-all duration-300`}
+          >
+            Premium Professionals
+          </span>
         </h1>
-        <p className="text-gray-500 text-lg mb-8 max-w-2xl mx-auto">
+
+        <p className="text-gray-300 text-base md:text-lg mb-8 max-w-2xl mx-auto">
           Verified, professional companions available 24/7. Average delivery time: 30 minutes.
         </p>
 
-        {/* Trust Badges */}
-        <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm text-gray-600">
-          <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-green-500" />
-            <span>100% Verified</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-            <span>4.9/5 Rating</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Users className="w-4 h-4 text-blue-500" />
-            <span>50k+ Happy Clients</span>
-          </div>
-        </div>
-
-        {/* Category Toggles - Now Interactive */}
-        <div className="inline-flex bg-white p-1.5 rounded-full shadow-sm border border-gray-100 mb-8">
+        <div className="inline-flex flex-wrap justify-center bg-white/5 backdrop-blur-sm p-1.5 rounded-full mb-10 border border-white/10">
           <button
-            onClick={() => setTheme("female")}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-              theme === "female" || theme === "all"
-                ? "bg-pink-500 text-white shadow-sm"
-                : "text-gray-600 hover:bg-gray-50"
+            onClick={() => setTheme("all")}
+            className={`px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              theme === "all" ? getActiveButtonClass() : "text-white/70 hover:text-white"
             }`}
           >
-            Women <span className="opacity-80 text-xs ml-1">12,000+</span>
+            All Genders
+          </button>
+          <button
+            onClick={() => setTheme("female")}
+            className={`px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              theme === "female" ? getActiveButtonClass() : "text-white/70 hover:text-white"
+            }`}
+          >
+            Female
           </button>
           <button
             onClick={() => setTheme("male")}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-              theme === "male" ? "bg-blue-600 text-white shadow-sm" : "text-gray-600 hover:bg-gray-50"
+            className={`px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              theme === "male" ? getActiveButtonClass() : "text-white/70 hover:text-white"
             }`}
           >
-            Men <span className="opacity-80 text-xs ml-1">5,000+</span>
+            Male
           </button>
           <button
             onClick={() => setTheme("trans")}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-              theme === "trans" ? "bg-purple-600 text-white shadow-sm" : "text-gray-600 hover:bg-gray-50"
+            className={`px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              theme === "trans" ? getActiveButtonClass() : "text-white/70 hover:text-white"
             }`}
           >
-            Trans <span className="opacity-80 text-xs ml-1">3,000+</span>
+            Trans
+          </button>
+          <button
+            onClick={() => setTheme("nonbinary")}
+            className={`px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              theme === "nonbinary" ? getActiveButtonClass() : "text-white/70 hover:text-white"
+            }`}
+          >
+            Non-Binary
           </button>
         </div>
 
-        {/* Search Bar */}
-        <div className="max-w-2xl mx-auto relative mb-16">
-          <div className={`absolute left-4 top-1/2 -translate-y-1/2 ${getPrimaryColor()} z-10 transition-colors`}>
-            <MapPin className="w-5 h-5" />
+        <div className="max-w-2xl mx-auto relative mb-4">
+          <div className="bg-white rounded-full shadow-2xl flex items-center p-2 gap-2">
+            <div className="flex items-center flex-1 px-4">
+              <MapPin className="w-5 h-5 text-gray-400 mr-3 flex-shrink-0" />
+              <Input
+                type="text"
+                placeholder="Enter city or area..."
+                className="border-0 shadow-none focus-visible:ring-0 text-sm h-12 placeholder:text-gray-400"
+              />
+            </div>
+            <Button
+              className={`${getSearchButtonClass()} text-white px-6 sm:px-8 rounded-full h-12 font-medium flex items-center gap-2 transition-all duration-300`}
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">Browse Now</span>
+            </Button>
           </div>
-          <Input
-            type="text"
-            placeholder="Enter your delivery address"
-            className={`w-full h-16 pl-12 pr-48 rounded-full border-gray-200 shadow-lg text-lg focus-visible:ring-2 transition-all`}
-            style={{
-              ["--tw-ring-color" as any]: theme === "male" ? "#2563eb" : theme === "trans" ? "#9333ea" : "#ec4899",
-            }}
-          />
-          <Button
-            className={`absolute right-2 top-2 bottom-2 rounded-full ${getButtonColor()} text-white px-8 text-base font-medium h-auto transition-colors duration-300`}
-          >
-            <Search className="w-4 h-4 mr-2" />
-            Find Companions Now
-          </Button>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            {
-              value: "375",
-              label: "Verified Companions",
-              sub: "Background checked",
-              icon: ShieldCheck,
-              color: "text-green-500",
-            },
-            {
-              value: "28 min",
-              label: "Avg Response Time",
-              sub: "Lightning Fast",
-              icon: Zap,
-              color: "text-yellow-500",
-            },
-            {
-              value: "98%",
-              label: "Satisfaction Rate",
-              sub: "Industry leading",
-              icon: Star,
-              color: "text-purple-500",
-            },
-            {
-              value: "7,502",
-              label: "Happy Clients",
-              sub: "Trusted worldwide",
-              icon: Heart,
-              color: "text-pink-500",
-            },
-          ].map((stat, i) => (
-            <div
-              key={i}
-              className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className={`text-3xl font-bold text-gray-900 mb-1 ${stat.color}`}>{stat.value}</div>
-              <div className="text-sm font-medium text-gray-900 mb-1">{stat.label}</div>
-              <div className="text-xs text-gray-500 flex items-center justify-center gap-1">
-                <stat.icon className="w-3 h-3" />
-                {stat.sub}
-              </div>
+        <a href="/browse" className={`text-sm font-medium transition-colors duration-300 ${getLinkClass()}`}>
+          or view all professionals
+        </a>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 bg-slate-900/80 backdrop-blur-md border-t border-white/10 py-6 sm:py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
+            <div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">2,000+</div>
+              <div className="text-xs sm:text-sm text-gray-400">Professional Companions</div>
             </div>
-          ))}
+            <div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">29 min</div>
+              <div className="text-xs sm:text-sm text-gray-400">Avg Response Time</div>
+            </div>
+            <div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">99.2%</div>
+              <div className="text-xs sm:text-sm text-gray-400">Satisfaction Rate</div>
+            </div>
+            <div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">50,000+</div>
+              <div className="text-xs sm:text-sm text-gray-400">Happy Clients</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

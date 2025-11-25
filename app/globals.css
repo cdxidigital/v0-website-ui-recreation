@@ -149,15 +149,4 @@
   --accent: 30 80% 60%; /* Orange-ish */
 }
 
-/* 3D Button Utility Classes */
-@layer utilities {
-  .btn-3d {
-    @apply transition-all duration-100 transform active:translate-y-1 active:shadow-none;
-    box-shadow: 0 4px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2));
-  }
-
-  .btn-3d:active {
-    box-shadow: 0 0px 0 rgba(0, 0, 0, 0);
-    transform: translateY(4px);
-  }
-}
+/* Removed 3D button utility classes for cleaner navigation */
