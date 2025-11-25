@@ -6,6 +6,28 @@ import { Twitter, Instagram, Linkedin, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/theme-context"
 
+const footerLinks = {
+  browse: [
+    { name: "Find Companions", href: "/browse" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Categories", href: "/browse" },
+  ],
+  company: [
+    { name: "About", href: "/investors" },
+    { name: "Investors", href: "/investors" },
+    { name: "Careers", href: "#" },
+  ],
+  resources: [
+    { name: "Wellbeing", href: "/safety" },
+    { name: "Contact", href: "#" },
+    { name: "FAQ", href: "/pricing" },
+  ],
+  legal: [
+    { name: "Terms", href: "#" },
+    { name: "Privacy", href: "#" },
+  ],
+}
+
 export function Footer() {
   const { theme } = useTheme()
 
@@ -26,8 +48,8 @@ export function Footer() {
 
   return (
     <footer>
+      {/* CTA Section */}
       <div className="bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 py-20 text-center text-white relative overflow-hidden">
-        {/* Decorative blur effects */}
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl" />
 
@@ -38,28 +60,25 @@ export function Footer() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-300 mb-10">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-400" />
-              24/7 Support
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-400" />
-              Verified Reviews
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-400" />
-              5-Star Support
-            </div>
+            {["24/7 Support", "Verified Reviews", "5-Star Support"].map((item) => (
+              <div key={item} className="flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-400" />
+                {item}
+              </div>
+            ))}
           </div>
 
-          <Button
-            className={`${getButtonClass()} text-white rounded-full px-10 py-7 text-lg font-bold shadow-2xl transition-all duration-300`}
-          >
-            Browse 2,500+ Companions Now
-          </Button>
+          <Link href="/browse">
+            <Button
+              className={`${getButtonClass()} text-white rounded-full px-10 py-7 text-lg font-bold shadow-2xl transition-all duration-300 btn-press hover:scale-105`}
+            >
+              Browse 2,500+ Companions Now
+            </Button>
+          </Link>
         </div>
       </div>
 
+      {/* Footer Links */}
       <div className="bg-slate-900 text-gray-400 py-16 text-sm">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
@@ -73,90 +92,33 @@ export function Footer() {
                   className="h-8 w-auto object-contain"
                 />
               </Link>
-              <p className="text-xs leading-relaxed max-w-xs">Premium companion booking platform</p>
+              <p className="text-xs leading-relaxed max-w-xs">
+                Premium companion marketplace connecting professionals with verified clients.
+              </p>
             </div>
 
-            <div>
-              <h4 className="text-white font-bold mb-4 text-xs uppercase tracking-wider">Browse</h4>
-              <ul className="space-y-2 text-xs">
-                <li>
-                  <Link href="/browse" className="hover:text-white transition-colors">
-                    Find Companions
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pricing" className="hover:text-white transition-colors">
-                    Pricing
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold mb-4 text-xs uppercase tracking-wider">Company</h4>
-              <ul className="space-y-2 text-xs">
-                <li>
-                  <Link href="/investors" className="hover:text-white transition-colors">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/investors" className="hover:text-white transition-colors">
-                    Investors
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Advertise
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold mb-4 text-xs uppercase tracking-wider">Resources</h4>
-              <ul className="space-y-2 text-xs">
-                <li>
-                  <Link href="/safety" className="hover:text-white transition-colors">
-                    Wellbeing
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    FAQ
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold mb-4 text-xs uppercase tracking-wider">Legal</h4>
-              <ul className="space-y-2 text-xs">
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Terms
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Privacy
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <div key={category}>
+                <h4 className="text-white font-bold mb-4 text-xs uppercase tracking-wider">{category}</h4>
+                <ul className="space-y-2 text-xs">
+                  {links.map((link) => (
+                    <li key={link.name}>
+                      <Link href={link.href} className="hover:text-white transition-colors">
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
             <div>© 2025 WhoreDash. All rights reserved.</div>
             <div className="flex gap-4">
-              <Twitter className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
-              <Instagram className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
-              <Linkedin className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
+              {[Twitter, Instagram, Linkedin].map((Icon, i) => (
+                <Icon key={i} className="w-5 h-5 hover:text-white cursor-pointer transition-colors" />
+              ))}
             </div>
           </div>
         </div>
