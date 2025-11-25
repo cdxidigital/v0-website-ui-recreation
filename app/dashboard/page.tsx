@@ -15,8 +15,6 @@ export default function DashboardPage() {
         return "bg-blue-600"
       case "trans":
         return "bg-purple-600"
-      case "nonbinary":
-        return "bg-yellow-500"
       default:
         return "bg-pink-600"
     }
@@ -28,31 +26,16 @@ export default function DashboardPage() {
         return "text-blue-600"
       case "trans":
         return "text-purple-600"
-      case "nonbinary":
-        return "text-yellow-600"
       default:
         return "text-pink-600"
     }
   }
 
-  const getBgColor = () => {
-    switch (theme) {
-      case "male":
-        return "bg-blue-50"
-      case "trans":
-        return "bg-purple-50"
-      case "nonbinary":
-        return "bg-yellow-50"
-      default:
-        return "bg-pink-50"
-    }
-  }
-
   const stats = [
-    { label: "Total Earnings", value: "$12,450", icon: DollarSign, change: "+12.5%" },
-    { label: "Bookings This Month", value: "28", icon: Calendar, change: "+8" },
-    { label: "Average Rating", value: "4.9", icon: Star, change: "+0.2" },
-    { label: "Profile Views", value: "1,247", icon: TrendingUp, change: "+156" },
+    { label: "Total Earnings", value: "$12,450", icon: DollarSign, change: "+12.5%", trend: "up" },
+    { label: "Bookings This Month", value: "28", icon: Calendar, change: "+8", trend: "up" },
+    { label: "Average Rating", value: "4.9", icon: Star, change: "+0.2", trend: "up" },
+    { label: "Profile Views", value: "1,247", icon: TrendingUp, change: "+156", trend: "up" },
   ]
 
   const upcomingBookings = [
@@ -72,26 +55,20 @@ export default function DashboardPage() {
     <main className="min-h-screen bg-gray-50">
       <Navbar />
 
-      {/* Header */}
-      <section className={`${getThemeColor()} text-white py-16 pt-32 transition-colors duration-300`}>
+      {/* Dashboard Header */}
+      <section className={`${getThemeColor()} text-white py-12`}>
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="animate-fadeInUp">
+            <div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">Welcome back, Alex!</h1>
               <p className="text-white/90">Here's what's happening with your account today.</p>
             </div>
-            <div className="flex gap-3 animate-fadeInUp stagger-1">
-              <Button
-                variant="secondary"
-                className="bg-white/10 hover:bg-white/20 text-white border-white/20 backdrop-blur-sm"
-              >
+            <div className="flex gap-3">
+              <Button variant="secondary" className="bg-white/10 hover:bg-white/20 text-white border-white/20">
                 <Bell className="w-4 h-4 mr-2" />
                 Notifications
               </Button>
-              <Button
-                variant="secondary"
-                className="bg-white/10 hover:bg-white/20 text-white border-white/20 backdrop-blur-sm"
-              >
+              <Button variant="secondary" className="bg-white/10 hover:bg-white/20 text-white border-white/20">
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Button>
@@ -100,9 +77,9 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* Panic Button */}
+      {/* Emergency Panic Button */}
       <section className="container mx-auto px-4 max-w-7xl -mt-6 mb-8 relative z-10">
-        <div className="bg-red-500 text-white rounded-xl p-4 shadow-xl flex items-center justify-between animate-pulse-glow">
+        <div className="bg-red-500 text-white rounded-xl p-4 shadow-lg flex items-center justify-between">
           <div className="flex items-center gap-3">
             <AlertCircle className="w-6 h-6" />
             <div>
@@ -110,28 +87,22 @@ export default function DashboardPage() {
               <div className="text-sm text-white/90">Press this button if you need immediate assistance</div>
             </div>
           </div>
-          <Button className="bg-red-700 hover:bg-red-800 text-white font-bold px-6 btn-press">PANIC BUTTON</Button>
+          <Button className="bg-red-700 hover:bg-red-800 text-white font-bold px-6">PANIC BUTTON</Button>
         </div>
       </section>
 
       <div className="container mx-auto px-4 max-w-7xl pb-16">
-        {/* Stats */}
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, i) => {
+          {stats.map((stat) => {
             const Icon = stat.icon
             return (
-              <div
-                key={stat.label}
-                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 card-hover animate-fadeInUp"
-                style={{ animationDelay: `${0.1 * i}s` }}
-              >
+              <div key={stat.label} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-xl ${getBgColor()} transition-colors duration-300`}>
-                    <Icon className={`w-6 h-6 ${getTextColor()} transition-colors duration-300`} />
+                  <div className={`p-3 rounded-lg ${getThemeColor()} bg-opacity-10`}>
+                    <Icon className={`w-6 h-6 ${getTextColor()}`} />
                   </div>
-                  <span className="text-green-600 text-sm font-bold bg-green-50 px-2 py-1 rounded-full">
-                    {stat.change}
-                  </span>
+                  <span className="text-green-600 text-sm font-bold">{stat.change}</span>
                 </div>
                 <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
                 <div className="text-sm text-gray-600">{stat.label}</div>
@@ -141,7 +112,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Bookings */}
+          {/* Upcoming Bookings */}
           <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="p-6 border-b border-gray-100">
               <h2 className="text-xl font-bold text-gray-900">Upcoming Bookings</h2>
@@ -166,13 +137,10 @@ export default function DashboardPage() {
                         {booking.status}
                       </span>
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="bg-transparent">
+                        <Button size="sm" variant="outline">
                           View
                         </Button>
-                        <Button
-                          size="sm"
-                          className={`${getThemeColor()} text-white btn-press transition-colors duration-300`}
-                        >
+                        <Button size="sm" className={`${getThemeColor()} text-white`}>
                           Contact
                         </Button>
                       </div>
@@ -182,20 +150,20 @@ export default function DashboardPage() {
               ))}
             </div>
             <div className="p-4 border-t border-gray-100 text-center">
-              <Button variant="ghost" className={`${getTextColor()} transition-colors duration-300`}>
+              <Button variant="ghost" className={getTextColor()}>
                 View All Bookings
               </Button>
             </div>
           </div>
 
-          {/* Activity */}
+          {/* Recent Activity */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="p-6 border-b border-gray-100">
               <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
             </div>
             <div className="divide-y divide-gray-100">
               {recentActivity.map((activity, index) => (
-                <div key={index} className="p-4 hover:bg-gray-50 transition-colors">
+                <div key={index} className="p-4">
                   <div className="font-medium text-gray-900 text-sm mb-1">{activity.action}</div>
                   <div className="text-xs text-gray-600">{activity.from}</div>
                   <div className="text-xs text-gray-400 mt-1">{activity.time}</div>
@@ -203,7 +171,7 @@ export default function DashboardPage() {
               ))}
             </div>
             <div className="p-4 border-t border-gray-100 text-center">
-              <Button variant="ghost" className={`${getTextColor()} text-sm transition-colors duration-300`}>
+              <Button variant="ghost" className={`${getTextColor()} text-sm`}>
                 View All Activity
               </Button>
             </div>
@@ -214,21 +182,22 @@ export default function DashboardPage() {
         <div className="mt-8 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { icon: Calendar, label: "Manage Availability" },
-              { icon: Star, label: "View Reviews" },
-              { icon: DollarSign, label: "Earnings Report" },
-              { icon: TrendingUp, label: "Analytics" },
-            ].map((action, i) => (
-              <Button
-                key={i}
-                variant="outline"
-                className="h-auto py-4 flex-col gap-2 bg-transparent hover:bg-gray-50 btn-press"
-              >
-                <action.icon className="w-6 h-6" />
-                <span className="text-sm">{action.label}</span>
-              </Button>
-            ))}
+            <Button variant="outline" className="h-auto py-4 flex-col gap-2 bg-transparent">
+              <Calendar className="w-6 h-6" />
+              <span className="text-sm">Manage Availability</span>
+            </Button>
+            <Button variant="outline" className="h-auto py-4 flex-col gap-2 bg-transparent">
+              <Star className="w-6 h-6" />
+              <span className="text-sm">View Reviews</span>
+            </Button>
+            <Button variant="outline" className="h-auto py-4 flex-col gap-2 bg-transparent">
+              <DollarSign className="w-6 h-6" />
+              <span className="text-sm">Earnings Report</span>
+            </Button>
+            <Button variant="outline" className="h-auto py-4 flex-col gap-2 bg-transparent">
+              <TrendingUp className="w-6 h-6" />
+              <span className="text-sm">Analytics</span>
+            </Button>
           </div>
         </div>
       </div>

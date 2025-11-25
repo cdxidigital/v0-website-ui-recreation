@@ -114,8 +114,6 @@ export default function PricingPage() {
         return "bg-blue-600 hover:bg-blue-700"
       case "trans":
         return "bg-purple-600 hover:bg-purple-700"
-      case "nonbinary":
-        return "bg-yellow-500 hover:bg-yellow-600"
       default:
         return "bg-pink-600 hover:bg-pink-700"
     }
@@ -127,8 +125,6 @@ export default function PricingPage() {
         return "border-blue-600"
       case "trans":
         return "border-purple-600"
-      case "nonbinary":
-        return "border-yellow-500"
       default:
         return "border-pink-600"
     }
@@ -140,8 +136,6 @@ export default function PricingPage() {
         return "text-blue-600"
       case "trans":
         return "text-purple-600"
-      case "nonbinary":
-        return "text-yellow-600"
       default:
         return "text-pink-600"
     }
@@ -152,31 +146,31 @@ export default function PricingPage() {
       <Navbar />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-24 text-center pt-32">
+      <section className="bg-slate-900 text-white py-20 text-center">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fadeInUp">Simple, Transparent Pricing</h1>
-          <p className="text-gray-400 max-w-xl mx-auto animate-fadeInUp stagger-1">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h1>
+          <p className="text-gray-400 max-w-xl mx-auto">
             Affordable, feature-rich packages for companions and advertisers. No hidden fees.
           </p>
         </div>
       </section>
 
       {/* Tabs */}
-      <div className="container mx-auto px-4 -mt-6 relative z-10">
+      <div className="container mx-auto px-4 -mt-6">
         <div className="flex justify-center">
-          <div className="inline-flex bg-white rounded-full shadow-xl border border-gray-100 p-1.5">
+          <div className="inline-flex bg-white rounded-full shadow-lg border border-gray-100 p-1">
             <button
               onClick={() => setActiveTab("companions")}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                activeTab === "companions" ? "bg-gray-900 text-white shadow-lg" : "text-gray-600 hover:text-gray-900"
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeTab === "companions" ? "bg-gray-900 text-white" : "text-gray-600 hover:text-gray-900"
               }`}
             >
               For Companions
             </button>
             <button
               onClick={() => setActiveTab("advertisers")}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                activeTab === "advertisers" ? "bg-gray-900 text-white shadow-lg" : "text-gray-600 hover:text-gray-900"
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeTab === "advertisers" ? "bg-gray-900 text-white" : "text-gray-600 hover:text-gray-900"
               }`}
             >
               For Advertisers
@@ -192,14 +186,13 @@ export default function PricingPage() {
             {plans.map((plan, i) => (
               <div
                 key={i}
-                className={`relative bg-white rounded-2xl p-6 border-2 card-hover animate-fadeInUp ${
+                className={`relative bg-white rounded-2xl p-6 border-2 ${
                   plan.popular ? getBorderColor() : "border-gray-100"
                 }`}
-                style={{ animationDelay: `${0.1 * i}s` }}
               >
                 {plan.popular && (
                   <div
-                    className={`absolute -top-3 left-1/2 -translate-x-1/2 ${getAccentColor()} text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg`}
+                    className={`absolute -top-3 left-1/2 -translate-x-1/2 ${getAccentColor()} text-white text-xs font-bold px-4 py-1 rounded-full`}
                   >
                     MOST POPULAR
                   </div>
@@ -216,7 +209,7 @@ export default function PricingPage() {
                 {plan.savings && <p className={`text-sm ${getTextColor()} mb-4`}>{plan.savings}</p>}
 
                 <Button
-                  className={`w-full mb-6 rounded-lg btn-press ${
+                  className={`w-full mb-6 rounded-lg ${
                     plan.popular ? `${getAccentColor()} text-white` : "bg-gray-900 hover:bg-gray-800 text-white"
                   }`}
                 >
@@ -237,14 +230,15 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Feature Comparison */}
+      {/* Feature Comparison Table */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-center text-gray-900 mb-12">Feature Comparison</h2>
-          <div className="max-w-4xl mx-auto bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+
+          <div className="max-w-4xl mx-auto bg-white rounded-2xl overflow-hidden border border-gray-100">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
+                <tr className="border-b border-gray-100">
                   <th className="text-left p-4 font-semibold text-gray-900">Feature</th>
                   <th className="text-center p-4 font-semibold text-gray-900">Basic</th>
                   <th className="text-center p-4 font-semibold text-gray-900">Premium</th>
@@ -253,11 +247,11 @@ export default function PricingPage() {
               </thead>
               <tbody>
                 {comparisonFeatures.map((row, i) => (
-                  <tr key={i} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                  <tr key={i} className="border-b border-gray-50">
                     <td className="p-4 text-sm font-medium text-gray-900">{row.feature}</td>
                     <td className="p-4 text-sm text-center text-gray-600">{row.basic}</td>
-                    <td className={`p-4 text-sm text-center font-medium ${getTextColor()}`}>{row.premium}</td>
-                    <td className={`p-4 text-sm text-center font-medium ${getTextColor()}`}>{row.elite}</td>
+                    <td className={`p-4 text-sm text-center ${getTextColor()}`}>{row.premium}</td>
+                    <td className={`p-4 text-sm text-center ${getTextColor()}`}>{row.elite}</td>
                   </tr>
                 ))}
               </tbody>
@@ -266,47 +260,38 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* FAQ Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
+
           <div className="max-w-2xl mx-auto space-y-4">
             {faqs.map((faq, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm animate-fadeInUp"
-                style={{ animationDelay: `${0.05 * i}s` }}
-              >
+              <div key={i} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-5 text-left"
                 >
                   <span className="font-medium text-gray-900">{faq.question}</span>
                   <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${openFaq === i ? "rotate-180" : ""}`}
+                    className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === i ? "rotate-180" : ""}`}
                   />
                 </button>
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${openFaq === i ? "max-h-40" : "max-h-0"}`}
-                >
-                  <div className="px-5 pb-5 text-sm text-gray-600">{faq.answer}</div>
-                </div>
+                {openFaq === i && <div className="px-5 pb-5 text-sm text-gray-600">{faq.answer}</div>}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-16">
+      {/* CTA Section */}
+      <section className="bg-slate-900 py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Ready to Grow Your Business?</h2>
           <p className="text-gray-400 mb-8 max-w-xl mx-auto">
             Join thousands of companions earning more with WhoreDash's superior visibility and support
           </p>
-          <Button
-            className={`${getAccentColor()} text-white rounded-full px-8 py-6 text-lg font-medium btn-press shadow-xl hover:scale-105 transition-transform`}
-          >
+          <Button className={`${getAccentColor()} text-white rounded-full px-8 py-6 text-lg font-medium`}>
             Get Started Today →
           </Button>
         </div>

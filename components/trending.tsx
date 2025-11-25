@@ -3,7 +3,6 @@
 import { Star, MapPin, Heart, CheckCircle, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/theme-context"
-import Link from "next/link"
 
 const companions = [
   {
@@ -96,72 +95,73 @@ export function Trending() {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Trending Companions Near You</h2>
-            <p className="text-gray-500">Most booked this week - Available now</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">Trending Companions Near You</h2>
+            <p className="text-sm text-gray-500">Most booked this week - Available now</p>
           </div>
-          <Link href="/browse">
-            <Button
-              variant="outline"
-              className={`rounded-full px-6 bg-transparent transition-all duration-300 btn-press ${getButtonClass()}`}
-            >
-              View All 2,500+ →
-            </Button>
-          </Link>
+          <Button
+            variant="outline"
+            className={`rounded-full px-6 bg-transparent transition-all duration-300 ${getButtonClass()}`}
+          >
+            View All 2,500+ →
+          </Button>
         </div>
 
-        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {companions.map((companion, i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl border border-gray-100 overflow-hidden card-hover animate-fadeInUp"
-              style={{ animationDelay: `${0.1 * i}s` }}
+              className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow"
             >
-              {/* Image */}
-              <div className="relative aspect-[4/5] overflow-hidden">
+              {/* Image Container */}
+              <div className="relative aspect-[4/5]">
                 <img
                   src={companion.image || "/placeholder.svg"}
                   alt={companion.name}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  className="w-full h-full object-cover"
                 />
 
-                {/* Badges */}
-                <div className="absolute top-3 left-3 flex gap-2">
+                {/* Status Badge */}
+                <div className="absolute top-3 left-3">
                   <span
-                    className={`text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm ${
-                      companion.available ? "bg-green-500/90 text-white" : "bg-gray-800/90 text-white"
+                    className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                      companion.available ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
                     }`}
                   >
                     {companion.available ? "Available" : "Busy"}
                   </span>
-                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/90 text-gray-700 flex items-center gap-1 backdrop-blur-sm">
+                </div>
+
+                {/* Response Time */}
+                <div className="absolute top-3 left-24">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/90 text-gray-700 flex items-center gap-1">
                     <Clock className="w-3 h-3" />
                     {companion.responseTime}
                   </span>
                 </div>
 
+                {/* Verified Badge */}
                 {companion.verified && (
                   <div className="absolute top-3 right-3">
-                    <span className="bg-green-500 text-white text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                    <span className="bg-green-500 text-white text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1">
                       <CheckCircle className="w-3 h-3" />
                       Verified
                     </span>
                   </div>
                 )}
 
-                <button className="absolute bottom-3 right-3 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 shadow-lg hover:scale-110">
+                {/* Heart - Dynamic hover color */}
+                <button className="absolute bottom-3 right-3 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-sm">
                   <Heart className={`w-5 h-5 text-gray-400 ${getHeartHoverClass()} transition-colors`} />
                 </button>
               </div>
 
               {/* Content */}
-              <div className="p-5">
-                <div className="flex items-start justify-between mb-3">
+              <div className="p-4">
+                <div className="flex items-start justify-between mb-2">
                   <div>
                     <h3 className="font-bold text-gray-900 text-lg">{companion.name}</h3>
                     <div className="flex items-center gap-1 text-sm text-gray-500">
@@ -176,30 +176,32 @@ export function Trending() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-3">
                   {companion.tags.map((tag, j) => (
-                    <span key={j} className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">
+                    <span key={j} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                {/* Stats */}
+                {/* Stats Row */}
                 <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
                   <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-semibold text-gray-900">{companion.rating}</span>
+                    <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium text-gray-900">{companion.rating}</span>
                     <span>• {companion.bookings} bookings</span>
                   </div>
-                  <span className="text-green-600 font-medium">{companion.responseRate}% response</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-green-600 font-medium">{companion.responseRate}% response</span>
+                  </div>
                 </div>
 
-                {/* Actions */}
+                {/* Action Buttons */}
                 <div className="flex gap-2">
-                  <Button variant="outline" className="flex-1 rounded-lg text-sm bg-transparent btn-press">
+                  <Button variant="outline" className="flex-1 rounded-lg text-sm bg-transparent">
                     View Profile
                   </Button>
-                  <Button variant="outline" className="w-10 h-10 p-0 rounded-lg bg-transparent btn-press">
+                  <Button variant="outline" className="w-10 h-10 p-0 rounded-lg bg-transparent">
                     +
                   </Button>
                 </div>
