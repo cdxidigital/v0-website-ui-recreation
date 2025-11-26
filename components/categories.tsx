@@ -4,14 +4,14 @@ import { Utensils, Heart, MessageCircle, HeartPulse, Compass, Film, Plane, Users
 import { useTheme } from "@/components/theme-context"
 
 const categories = [
-  { name: "Dinner & Dating", icon: Utensils, count: "450+" },
-  { name: "Fine Dining", icon: Heart, count: "320+" },
-  { name: "Car Companions", icon: MessageCircle, count: "180+" },
-  { name: "Wellness", icon: HeartPulse, count: "290+" },
-  { name: "Adventure", icon: Compass, count: "210+" },
-  { name: "Entertainment", icon: Film, count: "380+" },
-  { name: "Events", icon: Plane, count: "260+" },
-  { name: "Conversation", icon: Users, count: "440+" },
+  { name: "Dinner & Dating", icon: Utensils, count: "450+", ariaLabel: "Browse 450+ dinner and dating companions" },
+  { name: "Fine Dining", icon: Heart, count: "320+", ariaLabel: "Browse 320+ fine dining companions" },
+  { name: "Car Companions", icon: MessageCircle, count: "180+", ariaLabel: "Browse 180+ car companions" },
+  { name: "Wellness", icon: HeartPulse, count: "290+", ariaLabel: "Browse 290+ wellness companions" },
+  { name: "Adventure", icon: Compass, count: "210+", ariaLabel: "Browse 210+ adventure companions" },
+  { name: "Entertainment", icon: Film, count: "380+", ariaLabel: "Browse 380+ entertainment companions" },
+  { name: "Events", icon: Plane, count: "260+", ariaLabel: "Browse 260+ event companions" },
+  { name: "Conversation", icon: Users, count: "440+", ariaLabel: "Browse 440+ conversation companions" },
 ]
 
 export function Categories() {
@@ -91,9 +91,10 @@ export function Categories() {
           {categories.map((category, i) => (
             <button
               key={i}
-              className={`bg-gradient-to-br ${gradients[i]} rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center text-white cursor-pointer hover:scale-105 transition-all duration-300 shadow-lg aspect-[3/2]`}
+              className={`bg-gradient-to-br ${gradients[i]} rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center text-white cursor-pointer hover:scale-105 active:scale-100 transition-all duration-300 shadow-lg hover:shadow-xl aspect-[3/2]`}
+              aria-label={category.ariaLabel}
             >
-              <category.icon className="w-8 h-8 sm:w-10 sm:h-10 mb-3" />
+              <category.icon className="w-8 h-8 sm:w-10 sm:h-10 mb-3" aria-hidden="true" />
               <span className="font-semibold text-xs sm:text-sm text-center">{category.name}</span>
               <span className="text-xs opacity-80 mt-1">{category.count} companions</span>
             </button>

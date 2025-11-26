@@ -5,9 +5,19 @@ import { Input } from "@/components/ui/input"
 import { MapPin, Search } from "lucide-react"
 import { useTheme } from "@/components/theme-context"
 import Link from "next/link"
+import { useEffect } from "react"
 
 export function Hero() {
   const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    console.log("[v0] Hero component mounted")
+    console.log("[v0] Current theme:", theme)
+  }, [])
+
+  useEffect(() => {
+    console.log("[v0] Theme changed to:", theme)
+  }, [theme])
 
   const getActiveButtonClass = () => {
     switch (theme) {
@@ -95,8 +105,17 @@ export function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-[44px]">
       {/* Video Background */}
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
-        <source src="\images\grok-whoredash.mp4" type="video/mp4" />
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        aria-hidden="true"
+        onLoadedData={() => console.log("[v0] Video loaded successfully")}
+        onError={(e) => console.error("[v0] Video failed to load:", e)}
+      >
+        <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-whoredash-ZVlGfKakoyaVW7dnDvN0mnjlBizaTT.mp4" type="video/mp4" />
       </video>
 
       {/* Gradient Overlay */}
@@ -107,6 +126,8 @@ export function Hero() {
         {/* Badge */}
         <div
           className={`inline-flex items-center gap-2 border rounded-full px-4 py-2 mb-6 transition-all duration-300 animate-fadeInUp ${getBadgeClass()}`}
+          role="status"
+          aria-label="Verified professionals available"
         >
           <span className="text-sm font-medium">✨ Verified Professionals</span>
         </div>
@@ -128,11 +149,18 @@ export function Hero() {
         </p>
 
         {/* Gender Filter Tabs */}
-        <div className="inline-flex flex-wrap justify-center bg-white/5 backdrop-blur-sm p-1.5 rounded-full mb-10 border border-white/10 animate-fadeInUp stagger-3">
+        <div
+          className="inline-flex flex-wrap justify-center bg-white/5 backdrop-blur-sm p-1.5 rounded-full mb-10 border border-white/10 animate-fadeInUp stagger-3"
+          role="tablist"
+          aria-label="Gender filter options"
+        >
           {genderOptions.map((option) => (
             <button
               key={option.id}
               onClick={() => setTheme(option.id as any)}
+              role="tab"
+              aria-selected={theme === option.id}
+              aria-label={`Filter by ${option.label}`}
               className={`px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 theme === option.id ? getActiveButtonClass() : "text-white/70 hover:text-white hover:bg-white/5"
               }`}
@@ -144,30 +172,36 @@ export function Hero() {
 
         {/* Search Bar */}
         <div className="max-w-2xl mx-auto relative mb-4 animate-fadeInUp stagger-4">
-          <div className="bg-white rounded-full shadow-2xl flex items-center p-2 gap-2">
+          <form
+            className="bg-white rounded-full shadow-2xl flex items-center p-2 gap-2"
+            onSubmit={(e) => e.preventDefault()}
+          >
             <div className="flex items-center flex-1 px-4">
-              <MapPin className="w-5 h-5 text-gray-400 mr-3 flex-shrink-0" />
+              <MapPin className="w-5 h-5 text-gray-400 mr-3 flex-shrink-0" aria-hidden="true" />
               <Input
                 type="text"
                 placeholder="Enter city or area..."
+                aria-label="Search location"
                 className="border-0 shadow-none focus-visible:ring-0 text-sm h-12 placeholder:text-gray-400 bg-transparent"
               />
             </div>
-            <Link href="/browse">
+            <Link href="/browse" tabIndex={-1}>
               <Button
-                className={`${getSearchButtonClass()} text-white px-6 sm:px-8 rounded-full h-12 font-medium flex items-center gap-2 transition-all duration-300 btn-press`}
+                type="button"
+                className={`${getSearchButtonClass()} text-white px-6 sm:px-8 rounded-full h-12 font-medium flex items-center gap-2 transition-all duration-300 btn-press hover:scale-105`}
+                aria-label="Browse companions now"
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">Browse Now</span>
               </Button>
             </Link>
-          </div>
+          </form>
         </div>
 
         {/* Browse All Link */}
         <Link
           href="/browse"
-          className={`text-sm font-medium transition-colors duration-300 animate-fadeInUp stagger-5 ${getLinkClass()}`}
+          className={`text-sm font-medium transition-colors duration-300 animate-fadeInUp stagger-5 inline-block hover:underline focus:underline ${getLinkClass()}`}
         >
           or view all professionals
         </Link>

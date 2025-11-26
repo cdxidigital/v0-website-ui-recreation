@@ -188,6 +188,18 @@
   }
 }
 
+@keyframes smoothScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -214,6 +226,10 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+.animate-smooth-scale {
+  animation: smoothScale 0.3s ease-in-out;
+}
+
 /* Staggered animation delays */
 .stagger-1 {
   animation-delay: 0.1s;
@@ -231,30 +247,32 @@
   animation-delay: 0.5s;
 }
 
-/* Focus styles for accessibility */
+/* Enhanced focus styles for better accessibility */
 :focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* Custom scrollbar */
+/* Improved scrollbar with theme-aware colors */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+  background: #f8f8f8;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c4c4c4;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #c4c4c4, #a8a8a8);
+  border-radius: 5px;
+  border: 2px solid #f8f8f8;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: linear-gradient(180deg, #a8a8a8, #8a8a8a);
 }
 
 /* Selection styling */
@@ -263,14 +281,36 @@
   color: inherit;
 }
 
-/* Card hover effects */
+/* Accessible reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card-hover {
+    border: 2px solid currentColor;
+  }
+
+  button:focus-visible {
+    outline-width: 4px;
+  }
+}
+
+/* Enhanced card hover with smooth lift and shadow */
 .card-hover {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
 }
 
 /* Glass morphism */
@@ -287,9 +327,10 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Button press effect */
+/* Improved button press effect with subtle haptic feedback */
 .btn-press:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
+  transition: transform 0.05s ease;
 }
 
 /* Image loading placeholder */

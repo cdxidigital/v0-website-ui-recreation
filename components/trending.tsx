@@ -4,6 +4,7 @@ import { Star, MapPin, Heart, CheckCircle, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/theme-context"
 import Link from "next/link"
+import { useState } from "react"
 
 const companions = [
   {
@@ -49,6 +50,7 @@ const companions = [
 
 export function Trending() {
   const { theme } = useTheme()
+  const [favorites, setFavorites] = useState<Set<string>>(new Set())
 
   const getAccentColor = () => {
     switch (theme) {
@@ -95,6 +97,18 @@ export function Trending() {
     }
   }
 
+  const toggleFavorite = (name: string) => {
+    setFavorites((prev) => {
+      const next = new Set(prev)
+      if (next.has(name)) {
+        next.delete(name)
+      } else {
+        next.add(name)
+      }
+      return next
+    })
+  }
+
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -107,7 +121,7 @@ export function Trending() {
           <Link href="/browse">
             <Button
               variant="outline"
-              className={`rounded-full px-6 bg-transparent transition-all duration-300 btn-press ${getButtonClass()}`}
+              className={`rounded-full px-6 bg-transparent transition-all duration-300 btn-press hover:scale-105 ${getButtonClass()}`}
             >
               View All 2,500+ →
             </Button>
@@ -117,17 +131,18 @@ export function Trending() {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {companions.map((companion, i) => (
-            <div
+            <article
               key={i}
               className="bg-white rounded-2xl border border-gray-100 overflow-hidden card-hover animate-fadeInUp"
               style={{ animationDelay: `${0.1 * i}s` }}
             >
               {/* Image */}
-              <div className="relative aspect-[4/5] overflow-hidden">
+              <div className="relative aspect-[4/5] overflow-hidden group">
                 <img
                   src={companion.image || "/placeholder.svg"}
-                  alt={companion.name}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  alt={`${companion.name} - Professional companion in ${companion.location}`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading={i < 3 ? "eager" : "lazy"}
                 />
 
                 {/* Badges */}
@@ -136,26 +151,42 @@ export function Trending() {
                     className={`text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm ${
                       companion.available ? "bg-green-500/90 text-white" : "bg-gray-800/90 text-white"
                     }`}
+                    aria-label={companion.available ? "Available now" : "Currently busy"}
                   >
                     {companion.available ? "Available" : "Busy"}
                   </span>
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/90 text-gray-700 flex items-center gap-1 backdrop-blur-sm">
-                    <Clock className="w-3 h-3" />
+                    <Clock className="w-3 h-3" aria-hidden="true" />
                     {companion.responseTime}
                   </span>
                 </div>
 
                 {companion.verified && (
                   <div className="absolute top-3 right-3">
-                    <span className="bg-green-500 text-white text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg">
-                      <CheckCircle className="w-3 h-3" />
+                    <span
+                      className="bg-green-500 text-white text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg"
+                      aria-label="Verified companion"
+                    >
+                      <CheckCircle className="w-3 h-3" aria-hidden="true" />
                       Verified
                     </span>
                   </div>
                 )}
 
-                <button className="absolute bottom-3 right-3 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 shadow-lg hover:scale-110">
-                  <Heart className={`w-5 h-5 text-gray-400 ${getHeartHoverClass()} transition-colors`} />
+                <button
+                  onClick={() => toggleFavorite(companion.name)}
+                  className="absolute bottom-3 right-3 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 shadow-lg hover:scale-110 focus:scale-110"
+                  aria-label={favorites.has(companion.name) ? "Remove from favorites" : "Add to favorites"}
+                  aria-pressed={favorites.has(companion.name)}
+                >
+                  <Heart
+                    className={`w-5 h-5 transition-colors ${
+                      favorites.has(companion.name)
+                        ? "fill-pink-500 text-pink-500"
+                        : `text-gray-400 ${getHeartHoverClass()}`
+                    }`}
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
 
@@ -165,7 +196,7 @@ export function Trending() {
                   <div>
                     <h3 className="font-bold text-gray-900 text-lg">{companion.name}</h3>
                     <div className="flex items-center gap-1 text-sm text-gray-500">
-                      <MapPin className="w-3.5 h-3.5" />
+                      <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
                       {companion.location}
                     </div>
                   </div>
@@ -176,9 +207,13 @@ export function Trending() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-4" role="list" aria-label="Service categories">
                   {companion.tags.map((tag, j) => (
-                    <span key={j} className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">
+                    <span
+                      key={j}
+                      className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full"
+                      role="listitem"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -187,24 +222,34 @@ export function Trending() {
                 {/* Stats */}
                 <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
                   <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" aria-hidden="true" />
                     <span className="font-semibold text-gray-900">{companion.rating}</span>
-                    <span>• {companion.bookings} bookings</span>
+                    <span aria-label={`${companion.bookings} bookings`}>• {companion.bookings} bookings</span>
                   </div>
-                  <span className="text-green-600 font-medium">{companion.responseRate}% response</span>
+                  <span className="text-green-600 font-medium" aria-label={`${companion.responseRate}% response rate`}>
+                    {companion.responseRate}% response
+                  </span>
                 </div>
 
                 {/* Actions */}
                 <div className="flex gap-2">
-                  <Button variant="outline" className="flex-1 rounded-lg text-sm bg-transparent btn-press">
+                  <Button
+                    variant="outline"
+                    className="flex-1 rounded-lg text-sm bg-transparent btn-press hover:bg-gray-50"
+                    aria-label={`View ${companion.name}'s profile`}
+                  >
                     View Profile
                   </Button>
-                  <Button variant="outline" className="w-10 h-10 p-0 rounded-lg bg-transparent btn-press">
+                  <Button
+                    variant="outline"
+                    className="w-10 h-10 p-0 rounded-lg bg-transparent btn-press hover:bg-gray-50"
+                    aria-label="Quick book"
+                  >
                     +
                   </Button>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

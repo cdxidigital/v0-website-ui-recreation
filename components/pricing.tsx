@@ -67,6 +67,27 @@ export function Pricing() {
     }
   }
 
+  const features = [
+    {
+      icon: DollarSign,
+      title: "Transparent Pricing",
+      description: "No hidden fees - just clear, upfront pricing",
+      type: "dollar",
+    },
+    {
+      icon: Calendar,
+      title: "Flexible Bookings",
+      description: "Book by the hour, day, or custom arrangements",
+      type: "calendar",
+    },
+    {
+      icon: CheckCircle,
+      title: "Secure Payments",
+      description: "All transactions processed securely and discreetly",
+      type: "check",
+    },
+  ]
+
   return (
     <section className="py-20 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
@@ -77,51 +98,33 @@ export function Pricing() {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-              <div className="flex items-center gap-3 mb-6">
-                <div
-                  className={`w-12 h-12 ${getIconBgClass("dollar")} rounded-full flex items-center justify-center transition-colors duration-300`}
-                >
-                  <DollarSign className={`w-6 h-6 ${getIconTextClass("dollar")} transition-colors duration-300`} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900">Transparent Pricing</h3>
-                  <p className="text-sm text-gray-500">No hidden fees - just clear, upfront pricing</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-              <div className="flex items-center gap-3 mb-6">
-                <div
-                  className={`w-12 h-12 ${getIconBgClass("calendar")} rounded-full flex items-center justify-center transition-colors duration-300`}
-                >
-                  <Calendar className={`w-6 h-6 ${getIconTextClass("calendar")} transition-colors duration-300`} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900">Flexible Bookings</h3>
-                  <p className="text-sm text-gray-500">Book by the hour, day, or custom arrangements</p>
+            {features.map((feature, i) => (
+              <div key={i} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 card-hover">
+                <div className="flex items-center gap-3 mb-6">
+                  <div
+                    className={`w-12 h-12 ${getIconBgClass(feature.type)} rounded-full flex items-center justify-center transition-colors duration-300`}
+                  >
+                    <feature.icon
+                      className={`w-6 h-6 ${getIconTextClass(feature.type)} transition-colors duration-300`}
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-gray-900">{feature.title}</h3>
+                    <p className="text-sm text-gray-500">{feature.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`w-12 h-12 ${getIconBgClass("check")} rounded-full flex items-center justify-center`}>
-                  <CheckCircle className={`w-6 h-6 ${getIconTextClass("check")}`} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900">Secure Payments</h3>
-                  <p className="text-sm text-gray-500">All transactions processed securely and discreetly</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
             {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl" aria-hidden="true" />
+            <div
+              className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl"
+              aria-hidden="true"
+            />
 
             <div className="relative z-10">
               <h3 className="text-2xl font-bold mb-8">Companion Benefits</h3>
@@ -130,6 +133,7 @@ export function Pricing() {
                 <div className="flex items-start gap-3">
                   <TrendingUp
                     className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`}
+                    aria-hidden="true"
                   />
                   <div>
                     <div className="font-semibold mb-1">Average Earnings</div>
@@ -140,7 +144,10 @@ export function Pricing() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Users className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`} />
+                  <Users
+                    className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`}
+                    aria-hidden="true"
+                  />
                   <div>
                     <div className="font-semibold mb-1">50,000+ Active Clients</div>
                     <div className="text-sm text-gray-300">Large client base to reach</div>
@@ -148,7 +155,10 @@ export function Pricing() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Calendar className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`} />
+                  <Calendar
+                    className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`}
+                    aria-hidden="true"
+                  />
                   <div>
                     <div className="font-semibold mb-1">Flexible Scheduling</div>
                     <div className="text-sm text-gray-300">Set your own availability and rates</div>
@@ -158,6 +168,7 @@ export function Pricing() {
                 <div className="flex items-start gap-3">
                   <CheckCircle
                     className={`w-5 h-5 ${getAccentColor()} mt-0.5 shrink-0 transition-colors duration-300`}
+                    aria-hidden="true"
                   />
                   <div>
                     <div className="font-semibold mb-1">Verified Performers</div>
@@ -167,7 +178,8 @@ export function Pricing() {
               </div>
 
               <Button
-                className={`w-full ${getButtonClass()} text-white rounded-xl py-6 text-lg font-bold shadow-xl transition-all duration-300`}
+                className={`w-full ${getButtonClass()} text-white rounded-xl py-6 text-lg font-bold shadow-xl transition-all duration-300 btn-press hover:scale-105`}
+                aria-label="Apply to become a companion"
               >
                 Apply to Join
               </Button>
